@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEnd", "BackEnd\BackEnd.csproj", "{6C3559CC-E8E5-44EE-9827-B3F154210D77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8420CE13-16DE-48D8-AB72-EAA451B3A700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A688A150-3F01-465F-ABF5-E681134C69F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{6C3559CC-E8E5-44EE-9827-B3F154210D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C3559CC-E8E5-44EE-9827-B3F154210D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C3559CC-E8E5-44EE-9827-B3F154210D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8420CE13-16DE-48D8-AB72-EAA451B3A700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8420CE13-16DE-48D8-AB72-EAA451B3A700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8420CE13-16DE-48D8-AB72-EAA451B3A700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8420CE13-16DE-48D8-AB72-EAA451B3A700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A688A150-3F01-465F-ABF5-E681134C69F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A688A150-3F01-465F-ABF5-E681134C69F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A688A150-3F01-465F-ABF5-E681134C69F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A688A150-3F01-465F-ABF5-E681134C69F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

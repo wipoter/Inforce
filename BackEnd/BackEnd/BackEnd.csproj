@@ -7,8 +7,36 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Services\LoginInfoService.cs">
+        <DependentUpon>ILoginInfoService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Repositories\LoginInfoRepository.cs">
+        <DependentUpon>ILoginInfoRepository.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Repositories\UserRepository.cs">
+        <DependentUpon>IUserRepository.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Services\UserService.cs">
+        <DependentUpon>IUserService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
