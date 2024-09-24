@@ -1,3 +1,4 @@
+using BackEnd;
 using BackEnd.Data;
 using BackEnd.Extensions;
 using BackEnd.Interfaces;
@@ -13,20 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+builder.Services.AddDbContext<ShortenerUrlContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
 
-// Реєстрація сервісу авторизації
-services.AddAuthorization();
-
-// Реєстрація обробника вимог
-services.AddScoped<IPermissionService, PermissionService>();
-services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
-
-services.AddDbContext<ShortenerUrlContext>(options =>
-{
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-});
+services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 

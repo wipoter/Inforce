@@ -46,6 +46,9 @@
       <Compile Update="Infrastucture\PasswordHasher.cs">
         <DependentUpon>IPasswordHasher.cs</DependentUpon>
       </Compile>
+      <Compile Update="Services\PermissionService.cs">
+        <DependentUpon>IPermissionService.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

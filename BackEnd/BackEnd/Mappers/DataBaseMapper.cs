@@ -13,15 +13,9 @@ public static class DataBaseMapper
         {
             cfg.CreateMap<LoginInfoEntity, LoginInfo>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
-            // cfg.CreateMap<LoginInfo, LoginInfoEntity>()
-            //     .ForMember(dest => dest.Id, opt => opt.Ignore());
-
-
 
             cfg.CreateMap<UserEntity, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
-            // cfg.CreateMap<User, UserEntity>()
-            //     .ForMember(dest => dest.Id, opt => opt.Ignore());
         });
 
         _mapper = config.CreateMapper();

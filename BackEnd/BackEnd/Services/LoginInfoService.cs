@@ -25,14 +25,13 @@ public class LoginInfoService(
     public async Task<string> Login(string login, string password)
     {
         var loginInfo = await loginInfoRepository.GetByLogin(login);
-        var permissions = await loginInfoRepository.GetUserPermissions(loginInfo);
 
         var isPasswordValid = passwordHasher.Verify(password, loginInfo.PasswordHash);
 
         if (!isPasswordValid)
             throw new Exception("Invalid login or password");
 
-        var token = jwtProvider.GenerateToken(loginInfo, permissions);
+        var token = jwtProvider.GenerateToken(loginInfo);
 
         var httpContext = httpContextAccessor.HttpContext;
         httpContext.Response.Cookies.Append("not-jwt-token", token); 

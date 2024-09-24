@@ -4,8 +4,12 @@ namespace BackEnd.Interfaces;
 
 using Microsoft.AspNetCore.Authorization;
 
-public class PermissionRequirement(params Permission[] permissions) : IAuthorizationRequirement
+public class PermissionRequirement : IAuthorizationRequirement
 {
-    public Permission[] Permissions { get; } = permissions ?? throw new ArgumentNullException(nameof(permissions));
-    
+    public Permission[] Permissions { get; }
+
+    public PermissionRequirement(params Permission[] permissions)
+    {
+        Permissions = permissions;
+    }
 }

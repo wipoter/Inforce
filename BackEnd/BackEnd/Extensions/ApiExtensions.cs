@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using BackEnd.Interfaces;
+using BackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -32,7 +34,25 @@ public static class ApiExtensions
                 };
             });
         
-        services.AddAuthorization();
+        // Реєстрація обробника вимог
+        services.AddScoped<IPermissionService, PermissionService>();
+        services.AddSingleton<IAuthorizationHandler, PermissionAutorizationHandler>();
+        
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin", policy =>
+            {
+                policy.Requirements.Add(new PermissionRequirement(Permission.Create));
+                policy.Requirements.Add(new PermissionRequirement(Permission.Read));
+                policy.Requirements.Add(new PermissionRequirement(Permission.Delete));
+                policy.Requirements.Add(new PermissionRequirement(Permission.Update));
+            });
+            options.AddPolicy("User", policy =>
+            {
+                policy.Requirements.Add(new PermissionRequirement(Permission.Create));
+                policy.Requirements.Add(new PermissionRequirement(Permission.Read));
+                policy.Requirements.Add(new PermissionRequirement(Permission.Delete));
+            });
+        });
     }
-    
 }

@@ -7,5 +7,4 @@ public interface ILoginInfoRepository
 {
     Task CreateAsync(LoginInfo loginInfo);
     Task<LoginInfo> GetByLogin(string login);
-    Task<string[]> GetUserPermissions(LoginInfo loginInfo);
 }

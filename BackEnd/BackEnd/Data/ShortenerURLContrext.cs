@@ -6,9 +6,12 @@ using Microsoft.Extensions.Options;
 
 namespace BackEnd.Data;
 
-public class ShortenerUrlContext(DbContextOptions<ShortenerUrlContext> options,
-    IOptions<AuthorizationOptions> authOptions) : DbContext(options)
+public class ShortenerUrlContext(
+    DbContextOptions<ShortenerUrlContext> options,
+    IOptions<AuthorizationOptions> authOptions)
+    : DbContext(options)
 {
+    private readonly AuthorizationOptions _authOptions = authOptions.Value;
 
     public virtual DbSet<UrlInfoEntity> UrlInfos { get; set; }
     public virtual DbSet<LoginInfoEntity> LoginInfos { get; set; }
@@ -18,14 +21,14 @@ public class ShortenerUrlContext(DbContextOptions<ShortenerUrlContext> options,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShortenerUrlContext).Assembly);
-        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(_authOptions));
         
         var rolePermissions = new AuthorizationOptions
         {
             RolePermissions = new[]
             {
                 new RolePermissions { Role = "Admin", Permissions = new[] { "Create", "Read", "Update", "Delete" } },
-                new RolePermissions { Role = "User", Permissions = new[] { "Create", "Read" } }
+                new RolePermissions { Role = "User", Permissions = new[] { "Create", "Read", "Delete" } }
             }
         };
 
@@ -41,3 +44,4 @@ public class ShortenerUrlContext(DbContextOptions<ShortenerUrlContext> options,
         modelBuilder.Entity<RolePermissionEntity>().HasData(rolePermissionEntities);
     }
 }
+

@@ -33,19 +33,19 @@ public class JwtProviderTests
     [Test]
     public void GenerateToken_ReturnsValidToken()
     {
-        // // Arrange
-        // var loginInfo = LoginInfo.Create(Guid.NewGuid(), "login", "passwordHash"); // Ініціалізуйте необхідні параметри логіна
-        //
-        // // Act
-        // var token = _jwtProvider.GenerateToken(loginInfo);
-        //
-        // // Assert
-        // Assert.IsNotNull(token);
-        // var handler = new JwtSecurityTokenHandler();
-        // var jwtToken = handler.ReadJwtToken(token);
-        // Assert.IsNotNull(jwtToken);
-        // Assert.That(jwtToken.SignatureAlgorithm, Is.EqualTo(SecurityAlgorithms.HmacSha256));
-        // Console.WriteLine(jwtToken);
-        // Console.WriteLine();
+        // Arrange
+        var loginInfo = LoginInfo.Create(Guid.NewGuid(), "login", "passwordHash"); // Ініціалізуйте необхідні параметри логіна
+        
+        // Act
+        var token = _jwtProvider.GenerateToken(loginInfo);
+        
+        // Assert
+        Assert.IsNotNull(token);
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        Assert.IsNotNull(jwtToken);
+        Assert.That(jwtToken.SignatureAlgorithm, Is.EqualTo(SecurityAlgorithms.HmacSha256));
+        Console.WriteLine(jwtToken);
+        Console.WriteLine();
     }
 }

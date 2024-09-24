@@ -5,6 +5,6 @@ namespace BackEnd.Interfaces;
 
 public interface IJwtProvider
 {
-    string GenerateToken(LoginInfo loginInfo, string[] permissions);
+    string GenerateToken(LoginInfo loginInfo);
     byte[] GenerateSecretKey();
 }

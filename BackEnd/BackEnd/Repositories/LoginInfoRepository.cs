@@ -10,6 +10,9 @@ public class LoginInfoRepository(ShortenerUrlContext context, IMapper mapper): I
 {
     public async Task CreateAsync(LoginInfo loginInfo)
     {
+        if(GetByLogin(loginInfo.Login)!= null)
+            return;
+        
         var loginInfoEntity = new LoginInfoEntity()
         {
             Id = loginInfo.Id,
@@ -43,30 +46,5 @@ public class LoginInfoRepository(ShortenerUrlContext context, IMapper mapper): I
             .AsNoTracking()
             .FirstOrDefaultAsync(l => l.Login == login) ?? throw new Exception();
         return mapper.Map<LoginInfo>(loginInfoEntity);
-    }
-
-    public async Task<string[]> GetUserPermissions(LoginInfo loginInfo)
-    {
-        // Знаходимо користувача за LoginInfo
-        var userEntity = context.LoginInfos
-            .Include(l => l.User)
-            .ThenInclude(u => u.Roles)
-            .ThenInclude(r => r.Permissions)
-            .FirstOrDefaultAsync(l => l.Id == loginInfo.Id).Result.User;
-
-        // Перевіряємо, чи знайдено користувача
-        if (userEntity == null)
-        {
-            // Можна кинути виняток або повернути порожній масив, залежно від потреб
-            return Array.Empty<string>(); // або можна кинути виняток
-        }
-
-        // Витягуємо всі дозволи користувача
-        var permissions = userEntity.Roles
-            .SelectMany(role => role.Permissions.Select(p => p.Name)) // Витягуємо назви дозволів
-            .Distinct() // Залишаємо тільки унікальні дозволи
-            .ToArray();
-
-        return permissions; // Повертаємо масив дозволів
     }
 }

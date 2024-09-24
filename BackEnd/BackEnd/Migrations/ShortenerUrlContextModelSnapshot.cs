@@ -160,6 +160,11 @@ namespace BackEnd.Migrations
                         {
                             RoleId = 2,
                             PermissionId = 1
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            PermissionId = 4
                         });
                 });
 
