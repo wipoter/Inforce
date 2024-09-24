@@ -4,16 +4,26 @@ using BackEnd.Interfaces;
 using BackEnd.Mappers;
 using BackEnd.Repositories;
 using BackEnd.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using AuthorizationOptions = BackEnd.Interfaces.AuthorizationOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
 
-services.AddDbContextFactory<ShortenerUrlContext>(options =>
+// Реєстрація сервісу авторизації
+services.AddAuthorization();
+
+// Реєстрація обробника вимог
+services.AddScoped<IPermissionService, PermissionService>();
+services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+
+services.AddDbContext<ShortenerUrlContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 });

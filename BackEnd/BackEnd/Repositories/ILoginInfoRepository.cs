@@ -5,6 +5,7 @@ namespace BackEnd.Repositories;
 
 public interface ILoginInfoRepository
 {
-    Task CreateAsync(LoginInfo loginInfoEntity);
+    Task CreateAsync(LoginInfo loginInfo);
     Task<LoginInfo> GetByLogin(string login);
+    Task<string[]> GetUserPermissions(LoginInfo loginInfo);
 }

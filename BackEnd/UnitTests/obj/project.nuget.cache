@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ce+yXr7Wosh7gtizw7fVghc2lTu/L+Uy1Bp7h4if4/5J3znxnJaex/vJgp+2p9N+sgyf1YDVje53uYAMCBnGQQ==",
+  "dgSpecHash": "2ZG/zLKV+9OSONSHzZdUU7AJu4XCoAo5MDC/zYNtJzsXWpdA1zetKasLFU1qRPxt/fV0TpcJs5Iya/IkksrDnw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Inforce\\Inforce\\BackEnd\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.8\\microsoft.entityframeworkcore.8.0.8.nupkg.sha512",
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.8\\microsoft.entityframeworkcore.abstractions.8.0.8.nupkg.sha512",
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.8\\microsoft.entityframeworkcore.analyzers.8.0.8.nupkg.sha512",
+    "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.8\\microsoft.entityframeworkcore.inmemory.8.0.8.nupkg.sha512",
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.8\\microsoft.entityframeworkcore.relational.8.0.8.nupkg.sha512",
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\8.0.8\\microsoft.entityframeworkcore.sqlserver.8.0.8.nupkg.sha512",
     "C:\\Users\\wipot\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

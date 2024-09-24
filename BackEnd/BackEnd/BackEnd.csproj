@@ -37,6 +37,15 @@
       <Compile Update="Services\UserService.cs">
         <DependentUpon>IUserService.cs</DependentUpon>
       </Compile>
+      <Compile Update="Infrastucture\JwtOptions.cs">
+        <DependentUpon>IJwtProvider.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Infrastucture\JwtProvider.cs">
+        <DependentUpon>IJwtProvider.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Infrastucture\PasswordHasher.cs">
+        <DependentUpon>IPasswordHasher.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

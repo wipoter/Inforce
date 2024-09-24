@@ -154,3 +154,4 @@ D:\Projects\Inforce\Inforce\BackEnd\UnitTests\obj\Debug\net8.0\refint\UnitTests.
 D:\Projects\Inforce\Inforce\BackEnd\UnitTests\obj\Debug\net8.0\UnitTests.pdb
 D:\Projects\Inforce\Inforce\BackEnd\UnitTests\obj\Debug\net8.0\UnitTests.genruntimeconfig.cache
 D:\Projects\Inforce\Inforce\BackEnd\UnitTests\obj\Debug\net8.0\ref\UnitTests.dll
+D:\Projects\Inforce\Inforce\BackEnd\UnitTests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll

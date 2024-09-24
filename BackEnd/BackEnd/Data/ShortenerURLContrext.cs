@@ -1,34 +1,43 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Configurations;
+using BackEnd.Interfaces;
+using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace BackEnd.Data;
 
-public class ShortenerUrlContext : DbContext
+public class ShortenerUrlContext(DbContextOptions<ShortenerUrlContext> options,
+    IOptions<AuthorizationOptions> authOptions) : DbContext(options)
 {
-    public ShortenerUrlContext(DbContextOptions<ShortenerUrlContext> options) 
-        : base(options)
-    {
-    }
 
-    public virtual DbSet<UrlInfoEntity> UrlInfo { get; set; }
-    public virtual DbSet<LoginInfoEntity> LoginInfo { get; set; }
-    public virtual DbSet<UserEntity> User { get; set; }
+    public virtual DbSet<UrlInfoEntity> UrlInfos { get; set; }
+    public virtual DbSet<LoginInfoEntity> LoginInfos { get; set; }
+    public virtual DbSet<UserEntity> Users { get; set; }
+    public virtual DbSet<RoleEntity> Roles { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Налаштування зв'язку один-до-одного між LoginInfoEntity та UserEntity
-        modelBuilder.Entity<UserEntity>()
-            .HasOne(u => u.LoginInfo)  // User має один LoginInfo
-            .WithOne(l => l.User)      // LoginInfo має одного User
-            .HasForeignKey<LoginInfoEntity>(l => l.UserId); // Вказуємо зовнішній ключ
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShortenerUrlContext).Assembly);
+        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+        
+        var rolePermissions = new AuthorizationOptions
+        {
+            RolePermissions = new[]
+            {
+                new RolePermissions { Role = "Admin", Permissions = new[] { "Create", "Read", "Update", "Delete" } },
+                new RolePermissions { Role = "User", Permissions = new[] { "Create", "Read" } }
+            }
+        };
 
-        // Налаштування зв'язку один-до-багатьох між UserEntity та UrlInfoEntity
-        modelBuilder.Entity<UrlInfoEntity>()
-            .HasOne(u => u.User)  // UrlInfo має одного User
-            .WithMany(u => u.UrlInfos)  // User має багато UrlInfo
-            .HasForeignKey(u => u.UserId);  // Вказуємо зовнішній ключ
+        var rolePermissionEntities = rolePermissions.RolePermissions
+            .SelectMany(rp => rp.Permissions
+                .Select(p => new RolePermissionEntity
+                {
+                    RoleId = (int)Enum.Parse<Role>(rp.Role),
+                    PermissionId = (int)Enum.Parse<Permission>(p)
+                }))
+            .ToArray();
 
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<RolePermissionEntity>().HasData(rolePermissionEntities);
     }
 }

@@ -19,9 +19,19 @@ public class JwtProvider:IJwtProvider
         _options.SecretKey = GenerateSecretKey();
     }
     
-    public string GenerateToken(LoginInfo loginInfo)
+    public string GenerateToken(LoginInfo loginInfo, string[] permissions)
     {
-        Claim[] claims = [new("loginInfoId", loginInfo.Id.ToString()), new("login", loginInfo.Login), new("Admin", "true")];
+        var claims = new List<Claim>
+        {
+            new Claim("loginInfoId", loginInfo.Id.ToString()),
+            new Claim("login", loginInfo.Login)
+        };
+        
+        // Додаємо дозволи до claims
+        foreach (var permission in permissions)
+        {
+            claims.Add(new ("Permission", permission));
+        }
         
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(_options.SecretKey), SecurityAlgorithms.HmacSha256);

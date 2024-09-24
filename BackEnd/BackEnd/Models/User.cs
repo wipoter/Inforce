@@ -13,5 +13,5 @@ public class User
     public virtual ICollection<UrlInfoEntity> UrlInfos { get; set; }
 
     public int? LoginInfoId { get; set; }
-    public Guid? UserId { get; set; } // Змінено на Guid?
+    public Guid? UserId { get; set; }
 }

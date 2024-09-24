@@ -18,19 +18,21 @@ public class LoginInfoService(
     {
         var hashedPassword = passwordHasher.Generate(password);
         var user = LoginInfo.Create(Guid.NewGuid(), login, hashedPassword);
+        
         await loginInfoRepository.CreateAsync(user);
     }
 
     public async Task<string> Login(string login, string password)
     {
-        var user = await loginInfoRepository.GetByLogin(login);
+        var loginInfo = await loginInfoRepository.GetByLogin(login);
+        var permissions = await loginInfoRepository.GetUserPermissions(loginInfo);
 
-        var isPasswordValid = passwordHasher.Verify(password, user.PasswordHash);
+        var isPasswordValid = passwordHasher.Verify(password, loginInfo.PasswordHash);
 
         if (!isPasswordValid)
             throw new Exception("Invalid login or password");
 
-        var token = jwtProvider.GenerateToken(user);
+        var token = jwtProvider.GenerateToken(loginInfo, permissions);
 
         var httpContext = httpContextAccessor.HttpContext;
         httpContext.Response.Cookies.Append("not-jwt-token", token); 
