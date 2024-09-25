@@ -1,4 +1,5 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Enums;
+using BackEnd.Models;
 
 namespace BackEnd.Repositories;
 
@@ -8,5 +9,5 @@ public interface IUserRepository
     Task<HashSet<Permission>> GetUserPermissions(Guid id);
     Task DeleteShortUrlInfo(Guid userId, Guid infoId);
 
-    Task CreateUrlInfoAsynk(Guid userId, UrlInfo urlInfo);
+    Task CreateUrlInfoAsync(Guid userId, UrlInfo urlInfo);
 }

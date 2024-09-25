@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackEnd.Models;
+namespace BackEnd.Entities;
 
-public class LoginInfoEntity
+public sealed class LoginInfoEntity
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    public string Login { get; set; }
-    public string PasswordHash { get; set; }
+    public string? Login { get; set; }
+    public string? PasswordHash { get; set; }
     
     public Guid? UserId { get; set; }
-    public virtual UserEntity? User { get; set; }
+    public UserEntity? User { get; set; }
 }

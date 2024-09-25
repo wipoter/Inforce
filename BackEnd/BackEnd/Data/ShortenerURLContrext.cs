@@ -1,6 +1,6 @@
 ﻿using BackEnd.Configurations;
-using BackEnd.Interfaces;
-using BackEnd.Models;
+using BackEnd.Entities;
+using BackEnd.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

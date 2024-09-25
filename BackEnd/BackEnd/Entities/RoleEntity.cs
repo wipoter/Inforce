@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace BackEnd.Models;
+﻿namespace BackEnd.Entities;
 
 public class RoleEntity
 {

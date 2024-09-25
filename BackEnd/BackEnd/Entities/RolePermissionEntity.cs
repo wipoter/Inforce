@@ -1,4 +1,4 @@
-﻿namespace BackEnd.Models;
+﻿namespace BackEnd.Entities;
 
 public class RolePermissionEntity
 {

@@ -1,32 +1,31 @@
-﻿using BackEnd.Data;
-using BackEnd.Interfaces;
+﻿using BackEnd.Helpers;
+using BackEnd.Infrastructure;
 using BackEnd.Models;
 using BackEnd.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace BackEnd.Services;
 
 public class LoginInfoService(
     IJwtProvider jwtProvider,
     ILoginInfoRepository loginInfoRepository,
-    IPasswordHasher passwordHasher,
     IHttpContextAccessor httpContextAccessor)
     : ILoginInfoService
 {
     
     public async Task Register(string login, string password)
     {
-        var hashedPassword = passwordHasher.Generate(password);
-        var user = LoginInfo.Create(Guid.NewGuid(), login, hashedPassword);
+        var hashedPassword = PasswordHasher.Generate(password);
+        var user = new LoginInfo(Guid.NewGuid(), login, hashedPassword);
         
         await loginInfoRepository.CreateAsync(user);
     }
 
     public async Task<string> Login(string login, string password)
     {
-        var loginInfo = await loginInfoRepository.GetByLogin(login);
+        var loginInfo = await loginInfoRepository.GetByLoginAsync(login);
 
-        var isPasswordValid = passwordHasher.Verify(password, loginInfo.PasswordHash);
+        var isPasswordValid = PasswordHasher.Verify(password, loginInfo.PasswordHash);
 
         if (!isPasswordValid)
             throw new Exception("Invalid login or password");
@@ -34,7 +33,7 @@ public class LoginInfoService(
         var token = jwtProvider.GenerateToken(loginInfo);
 
         var httpContext = httpContextAccessor.HttpContext;
-        httpContext.Response.Cookies.Append("not-jwt-token", token); 
+        httpContext?.Response.Cookies.Append("not-jwt-token", token); 
 
         return token;
     }

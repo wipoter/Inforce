@@ -1,4 +1,6 @@
-﻿namespace BackEnd.Services;
+﻿using BackEnd.Enums;
+
+namespace BackEnd.Services;
 
 public interface IPermissionService
 {

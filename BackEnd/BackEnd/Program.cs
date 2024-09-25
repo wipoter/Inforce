@@ -1,48 +1,20 @@
-using BackEnd;
+using BackEnd.BuilderConfigure;
 using BackEnd.Data;
 using BackEnd.Extensions;
-using BackEnd.Interfaces;
+using BackEnd.Infrastructure;
 using BackEnd.Mappers;
 using BackEnd.Repositories;
 using BackEnd.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
-using AuthorizationOptions = BackEnd.Interfaces.AuthorizationOptions;
+using AuthorizationOptions = BackEnd.Data.AuthorizationOptions;
 
 var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
-var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<ShortenerUrlContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+Services.SetBuilder(builder);
+Services.ServicesAdd();
 
-services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
 
-services.AddHttpContextAccessor();
-
-builder.Services.AddControllers();
-
-services.AddHttpContextAccessor();
-services.AddScoped<ILoginInfoRepository, LoginInfoRepository>();
-services.AddScoped<ILoginInfoService, LoginInfoService>();
-
-services.AddScoped<IUserRepository, UserRepository>();
-services.AddScoped<IUserService, UserService>();
-
-services.AddScoped<IJwtProvider, JwtProvider>();
-services.AddScoped<IPasswordHasher, PasswordHasher>();
-
-services.AddSingleton(DataBaseMapper.GetMapper());
-
-services.AddSwaggerGen();
-
-// Використовуємо ваше розширення для додавання аутентифікації та авторизації
-var jwtProvider = builder.Services.BuildServiceProvider().GetService<IJwtProvider>();
-services.AddApiAuthentications(configuration, jwtProvider);
 
 var app = builder.Build();
 
@@ -53,6 +25,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp");
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {

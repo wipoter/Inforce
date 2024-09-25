@@ -43,11 +43,14 @@
       <Compile Update="Infrastucture\JwtProvider.cs">
         <DependentUpon>IJwtProvider.cs</DependentUpon>
       </Compile>
-      <Compile Update="Infrastucture\PasswordHasher.cs">
-        <DependentUpon>IPasswordHasher.cs</DependentUpon>
-      </Compile>
       <Compile Update="Services\PermissionService.cs">
         <DependentUpon>IPermissionService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Repositories\UrlInfoRepository.cs">
+        <DependentUpon>IUrlInfoRepository.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Services\UrlInfoService.cs">
+        <DependentUpon>IUrlInfoService.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

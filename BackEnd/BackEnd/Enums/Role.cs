@@ -1,4 +1,4 @@
-﻿namespace BackEnd;
+﻿namespace BackEnd.Enums;
 
 public enum Role
 {

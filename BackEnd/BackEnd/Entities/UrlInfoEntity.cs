@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackEnd.Models;
+namespace BackEnd.Entities;
 
 public class UrlInfoEntity
 {

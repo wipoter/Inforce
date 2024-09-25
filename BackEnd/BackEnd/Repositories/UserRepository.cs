@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BackEnd.Data;
+using BackEnd.Entities;
+using BackEnd.Enums;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,48 +19,35 @@ public class UserRepository(ShortenerUrlContext context, IMapper mapper): IUserR
 
     public async Task DeleteShortUrlInfo(Guid userId, Guid infoId)
     {
-        var info = context.Users.FindAsync(userId).Result.UrlInfos.FirstOrDefault(u => u.Id == infoId);
+        var user = await context.Users.FindAsync(userId);
+        var info = user.UrlInfos.FirstOrDefault(u => u.Id == infoId);
         context.UrlInfos.Remove(info);
         await context.SaveChangesAsync();
     }
 
-    public async Task CreateUrlInfoAsynk(Guid userId, UrlInfo urlInfo)
+    public async Task CreateUrlInfoAsync(Guid userId, UrlInfo urlInfo)
     {
-        // Використовуємо await для асинхронного доступу до даних
-        var user = await context.Users.FindAsync(userId);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
-        {
-            throw new Exception("User not found");
-        }
+            return;
 
-        var loginInfo = await context.LoginInfos.FirstOrDefaultAsync(l => l.UserId == user.Id);
+        var login = await context.LoginInfos.Where(l => l.UserId == userId).Select(l => l.Login).FirstOrDefaultAsync();
 
-        if (loginInfo == null)
-        {
-            throw new Exception("Login info not found");
-        }
-
-        if (user == null)
-        {
-            throw new Exception("User not found.");
-        }
-
-        if (loginInfo == null)
-        {
-            throw new Exception("Login info not found.");
-        }
-
+        if (login == null)
+            return;
+        
         var urlInfoEntity = new UrlInfoEntity()
         {
-            Id = Guid.NewGuid(), // Генеруємо новий ID, оскільки це новий запис
-            CreatedBy = loginInfo.Login,
+            Id = Guid.NewGuid(),
+            CreatedBy = login,
             CreatedDate = DateTime.Now,
             LongUrl = urlInfo.LongUrl,
             ShortUrl = urlInfo.ShortUrl,
-            UserId = user.Id // Встановлюємо ID користувача
+            UserId = userId
         };
-        
+
+        await context.UrlInfos.AddAsync(urlInfoEntity);
         user.UrlInfos.Add(urlInfoEntity);
         await context.SaveChangesAsync();
 

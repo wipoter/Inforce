@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.NetworkInformation;
-using System.Security.Claims;
-using BackEnd.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
+using BackEnd.Infrastructure;
 using BackEnd.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -33,16 +33,13 @@ public class JwtProviderTests
     [Test]
     public void GenerateToken_ReturnsValidToken()
     {
-        // Arrange
-        var loginInfo = LoginInfo.Create(Guid.NewGuid(), "login", "passwordHash"); // Ініціалізуйте необхідні параметри логіна
-        
-        // Act
+        var loginInfo = new LoginInfo(Guid.NewGuid(), "login", "passwordHash");
         var token = _jwtProvider.GenerateToken(loginInfo);
         
-        // Assert
         Assert.IsNotNull(token);
         var handler = new JwtSecurityTokenHandler();
         var jwtToken = handler.ReadJwtToken(token);
+        
         Assert.IsNotNull(jwtToken);
         Assert.That(jwtToken.SignatureAlgorithm, Is.EqualTo(SecurityAlgorithms.HmacSha256));
         Console.WriteLine(jwtToken);

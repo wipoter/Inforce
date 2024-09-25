@@ -1,4 +1,4 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +10,8 @@ public class UrlInfoConfiguration:IEntityTypeConfiguration<UrlInfoEntity>
     {
         builder.HasKey(u => u.Id);
         
-        builder.HasOne(u => u.User)  // UrlInfo має одного User
-            .WithMany(u => u.UrlInfos)  // User має багато UrlInfo
-            .HasForeignKey(u => u.UserId);  // Вказуємо зовнішній ключ
+        builder.HasOne(u => u.User)
+            .WithMany(u => u.UrlInfos)
+            .HasForeignKey(u => u.UserId);
     }
 }

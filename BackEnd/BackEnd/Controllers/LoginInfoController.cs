@@ -1,7 +1,4 @@
-﻿using BackEnd.Models;
-using BackEnd.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers;

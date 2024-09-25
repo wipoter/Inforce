@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackEnd.Models;
+namespace BackEnd.Entities;
 
 public class UserEntity
 {

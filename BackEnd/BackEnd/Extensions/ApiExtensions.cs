@@ -1,16 +1,16 @@
-﻿using System.Text;
-using BackEnd.Interfaces;
+﻿using BackEnd.Enums;
+using BackEnd.Infrastructure;
 using BackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BackEnd.Extensions;
 
 public static class ApiExtensions
 {
-    public static void AddApiAuthentications(this IServiceCollection services, IConfiguration configuration, IJwtProvider jwtProvider)
+    public static void AddApiAuthentications(this IServiceCollection services, IConfiguration configuration,
+        IJwtProvider jwtProvider)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
             JwtBearerDefaults.AuthenticationScheme,
@@ -34,10 +34,11 @@ public static class ApiExtensions
                 };
             });
         
-        // Реєстрація обробника вимог
         services.AddScoped<IPermissionService, PermissionService>();
-        services.AddSingleton<IAuthorizationHandler, PermissionAutorizationHandler>();
-        
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+        services.AddControllersWithViews();
+
         services.AddAuthorization(options =>
         {
             options.AddPolicy("Admin", policy =>
@@ -53,6 +54,9 @@ public static class ApiExtensions
                 policy.Requirements.Add(new PermissionRequirement(Permission.Read));
                 policy.Requirements.Add(new PermissionRequirement(Permission.Delete));
             });
+        
         });
+        
+        
     }
 }

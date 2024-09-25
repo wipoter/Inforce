@@ -1,13 +1,23 @@
 ﻿using AutoMapper;
+using BackEnd.Entities;
 using BackEnd.Models;
 
 namespace BackEnd.Mappers;
 
 public static class DataBaseMapper
 {
-    private static IMapper _mapper;
+    private static IMapper? _mapper;
 
-    public static void InitialiseMapper()
+    public static IMapper? GetMapper()
+    {
+        if (_mapper == null)
+        {
+            InitializeMapper();
+        }
+        return _mapper;
+    }
+    
+    private static void InitializeMapper()
     {
         var config = new MapperConfiguration(cfg =>
         {
@@ -16,17 +26,11 @@ public static class DataBaseMapper
 
             cfg.CreateMap<UserEntity, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+            
+            cfg.CreateMap<UrlInfoEntity, UrlInfo>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         });
 
         _mapper = config.CreateMapper();
-    }
-
-    public static IMapper GetMapper()
-    {
-        if (_mapper == null)
-        {
-            InitialiseMapper();
-        }
-        return _mapper;
     }
 }

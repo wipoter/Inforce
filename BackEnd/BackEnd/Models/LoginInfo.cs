@@ -1,19 +1,9 @@
 ﻿namespace BackEnd.Models;
 
-public class LoginInfo
+public class LoginInfo(Guid id, string login, string passwordHash)
 {
-    private LoginInfo(Guid id, string login, string passwordHash)
-    {
-        Id = id;
-        Login = login;
-        PasswordHash = passwordHash;
-    }
-
-    public Guid Id { get; set; }
-    public string Login { get; private set; }
-    public string PasswordHash { get; private set; }
-
-    public Guid UserId { get; set; } // Змінено на Guid
-
-    public static LoginInfo Create(Guid id, string login, string passwordHash) => new LoginInfo(id, login, passwordHash);
+    public Guid Id { get; set; } = id;
+    public string Login { get; private set; } = login;
+    public string PasswordHash { get; private set; } = passwordHash;
+    public Guid UserId { get; set; }
 }

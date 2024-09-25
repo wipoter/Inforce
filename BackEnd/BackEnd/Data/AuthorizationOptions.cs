@@ -1,7 +1,4 @@
-﻿using BackEnd.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-
-namespace BackEnd.Interfaces;
+﻿namespace BackEnd.Data;
 
 public class AuthorizationOptions
 {

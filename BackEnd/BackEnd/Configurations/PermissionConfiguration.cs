@@ -1,4 +1,5 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Entities;
+using BackEnd.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
